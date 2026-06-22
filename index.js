@@ -27,28 +27,9 @@ function getAvailableComponents() {
       .map((file) => file.replace(".md", ""));
 
     return componentFiles;
-
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(componentFiles),
-        },
-      ],
-    };
   } catch (error) {
     console.error(`Error reading components directory: ${error.message}`);
-
     return [];
-
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify([]),
-        },
-      ],
-    };
   }
 }
 
@@ -91,36 +72,11 @@ function getComponentMetadata(componentName) {
     }
 
     return metadata;
-
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(metadata),
-        },
-      ],
-    };
   } catch (error) {
     console.error(
       `Error reading metadata for ${componentName}: ${error.message}`
     );
-
-    return {
-      title: componentName,
-      description: "Error reading metadata",
-    };
-
-    return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify({
-            title: componentName,
-            description: "Error reading metadata",
-          }),
-        },
-      ],
-    };
+    return { title: componentName, description: "Error reading metadata" };
   }
 }
 
@@ -160,20 +116,7 @@ function getComponentDocs(componentName) {
     // Read the markdown file
     const docsContent = fs.readFileSync(docPath, "utf-8");
 
-    return (
-      docsContent || `Empty documentation file for component: ${componentName}`
-    );
-
-    return {
-      content: [
-        {
-          type: "text",
-          text:
-            docsContent ||
-            `Empty documentation file for component: ${componentName}`,
-        },
-      ],
-    };
+    return docsContent || `Empty documentation file for component: ${componentName}`;
   } catch (error) {
     return `Error retrieving documentation for ${componentName}: ${error.message}`;
   }
